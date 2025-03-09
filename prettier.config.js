@@ -6,6 +6,7 @@ const config = {
   trailingComma: 'es5',
   singleQuote: true,
   printWidth: 80,
+  proseWrap: 'always',
   semi: true,
   useTabs: false,
   tabWidth: 2,

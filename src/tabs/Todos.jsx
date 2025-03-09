@@ -5,12 +5,22 @@ import TodoList from '../components/TodoList/TodoList';
 import { nanoid } from 'nanoid';
 
 const Todos = () => {
-  const todos = [
+  // const todos = [
+  //   { id: '1', text: 'Practice more' },
+  //   { id: '2', text: 'Get all tasks done on time' },
+  // ];
+
+  // const [todo, setTodo] = useState(todos);
+
+  const initialTodo = [
     { id: '1', text: 'Practice more' },
     { id: '2', text: 'Get all tasks done on time' },
   ];
 
-  const [todo, setTodo] = useState(todos);
+  const [todo, setTodo] = useState(() => {
+    const savedData = localStorage.getItem('myTodos');
+    return savedData ? JSON.parse(savedData) : initialTodo;
+  });
 
   const addNewTodo = inputValue => {
     const newTodo = {
@@ -25,6 +35,9 @@ const Todos = () => {
   };
 
   // useEffect(() => {}, []);
+  useEffect(() => {
+    localStorage.setItem('myTodos', JSON.stringify(todo));
+  }, [todo]);
 
   const deleteTodo = todoId => {
     setTodo(prev => {
@@ -35,7 +48,7 @@ const Todos = () => {
   return (
     <>
       <Form onSubmit={addNewTodo} />
-      {todos.length === 0 && (
+      {!todo.length && (
         <Text textAlign="center">There are no any todos ...</Text>
       )}
       <TodoList todoArray={todo} onDelete={deleteTodo} />
